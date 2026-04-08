@@ -1,0 +1,10 @@
+{
+	"name": "C# (.NET)",
+	"image": "mcr.microsoft.com/devcontainers/dotnet:9.0",
+	"features": {
+		"ghcr.io/devcontainers/features/azure-cli:1.2.9": {
+			"installBicep": true,
+			"version": "latest"
+		}
+	}
+}
