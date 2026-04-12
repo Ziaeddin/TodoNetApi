@@ -1,8 +1,8 @@
 {
 	"name": "C# (.NET)",
-	"image": "mcr.microsoft.com/devcontainers/dotnet:9.0",
+	"image": "mcr.microsoft.com/devcontainers/dotnet",
 	"features": {
-		"ghcr.io/devcontainers/features/azure-cli:1.2.9": {
+		"ghcr.io/devcontainers/features/azure-cli": {
 			"installBicep": true,
 			"version": "latest"
 		}
