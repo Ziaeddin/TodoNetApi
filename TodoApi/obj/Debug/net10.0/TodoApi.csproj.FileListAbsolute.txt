@@ -157,3 +157,8 @@
 /workspaces/TodoNetApi/TodoApi/obj/Debug/net10.0/TodoApi.pdb
 /workspaces/TodoNetApi/TodoApi/obj/Debug/net10.0/TodoApi.genruntimeconfig.cache
 /workspaces/TodoNetApi/TodoApi/obj/Debug/net10.0/ref/TodoApi.dll
+/workspaces/TodoNetApi/TodoApi/bin/Debug/net10.0/Microsoft.AspNetCore.Authentication.JwtBearer.dll
+/workspaces/TodoNetApi/TodoApi/bin/Debug/net10.0/Microsoft.EntityFrameworkCore.InMemory.dll
+/workspaces/TodoNetApi/TodoApi/bin/Debug/net10.0/Swashbuckle.AspNetCore.Swagger.dll
+/workspaces/TodoNetApi/TodoApi/bin/Debug/net10.0/Swashbuckle.AspNetCore.SwaggerGen.dll
+/workspaces/TodoNetApi/TodoApi/bin/Debug/net10.0/Swashbuckle.AspNetCore.SwaggerUI.dll
