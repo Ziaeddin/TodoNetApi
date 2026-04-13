@@ -1,74 +1,62 @@
-// Controllers/TodosController.cs
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using TodoApi.Data;
 using TodoApi.Models;
+using TodoApi.Services;
 
 namespace TodoApi.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
+[Authorize]
 public class TodosController : ControllerBase
 {
-    private readonly AppDbContext _db;
+    private readonly ITodoService _service;
 
-    public TodosController(AppDbContext db)
+    public TodosController(ITodoService service)
     {
-        _db = db;
+        _service = service;
     }
 
-    // ─── GET /api/todos ─── Get all todos
+    // GET /api/todos
     [HttpGet]
     public async Task<ActionResult<List<TodoItem>>> GetAll()
     {
-        var todos = await _db.Todos.ToListAsync();
+        var todos = await _service.GetAllAsync();
         return Ok(todos);
     }
 
-    // ─── GET /api/todos/5 ─── Get one todo by ID
+    // GET /api/todos/5
     [HttpGet("{id}")]
     public async Task<ActionResult<TodoItem>> GetById(int id)
     {
-        var todo = await _db.Todos.FindAsync(id);
-        if (todo == null) return NotFound();
-        return Ok(todo);
+        var item = await _service.GetByIdAsync(id);
+        if (item == null) return NotFound();
+        return Ok(item);
     }
 
-    // ─── POST /api/todos ─── Create a new todo
+    // POST /api/todos
     [HttpPost]
     public async Task<ActionResult<TodoItem>> Create(TodoItem item)
     {
-        _db.Todos.Add(item);
-        await _db.SaveChangesAsync();
-        return CreatedAtAction(nameof(GetById), new { id = item.Id }, item);
+        var created = await _service.CreateAsync(item);
+        return CreatedAtAction(nameof(GetById), new { id = created.Id }, created);
     }
 
-    // ─── PUT /api/todos/5 ─── Update an existing todo
+    // PUT /api/todos/5
     [HttpPut("{id}")]
     public async Task<IActionResult> Update(int id, TodoItem item)
     {
-        if (id != item.Id) return BadRequest();
-
-        var existing = await _db.Todos.FindAsync(id);
-        if (existing == null) return NotFound();
-
-        existing.Title = item.Title;
-        existing.IsCompleted = item.IsCompleted;
-        await _db.SaveChangesAsync();
-
+        var success = await _service.UpdateAsync(id, item);
+        if (!success) return NotFound();
         return NoContent();
     }
 
-    // ─── DELETE /api/todos/5 ─── Delete a todo
+    // DELETE /api/todos/5
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(int id)
     {
-        var todo = await _db.Todos.FindAsync(id);
-        if (todo == null) return NotFound();
-
-        _db.Todos.Remove(todo);
-        await _db.SaveChangesAsync();
-
+        var success = await _service.DeleteAsync(id);
+        if (!success) return NotFound();
         return NoContent();
     }
 }
